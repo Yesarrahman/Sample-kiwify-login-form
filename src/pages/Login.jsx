@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Login = () => {
   return (
-    <div className="bg-[#f9fafb80] pt-[80px]">
+    <div className="bg-[#f9fafb80] pt-20">
       <div className="">
         <img className="mx-auto  h-[48px]" src={Logo} alt="Brand Logo" />
       </div>
