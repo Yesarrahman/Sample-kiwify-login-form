@@ -1,45 +1,19 @@
 import Logo from '../assets/images/logo.png';
 import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import '../../src/styles.css';
 
 const Register = () => {
-  const initialValues = { email: '', password: '' };
-  const [formValues, setFormValues] = useState(initialValues);
-  const [formErrors, setFormErrors] = useState({});
-  const [isSubmit, setIsSubmit] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormValues({ ...formValues, [name]: value });
+  const onSubmit = (data) => {
+    console.log(data);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setFormErrors(Validate(formValues));
-    setIsSubmit(true);
-  };
-
-  useEffect(() => {
-    if (Object.keys(formErrors).length === 0 && isSubmit) {
-      console.log(formValues);
-    }
-  }, [formErrors, formValues, isSubmit]);
-
-  const Validate = (values) => {
-    const errors = {};
-    //const regex = /^[^\s@]+@\.[^s@]{2,}$/i;
-    if (!values.email) {
-      errors.email = 'Esse campo é obrigatório';
-    }
-    if (!values.email) {
-      errors.email2 =
-        'Os dois e-mails devem ser iguais Esse campo é obrigatório';
-    }
-    if (!values.password) {
-      errors.password = 'Esse campo é obrigatório';
-    }
-    return errors;
-  };
   return (
     <div className="bg-[#dbe9f8b6] pt-[55px] h-[800px]">
       <div className="">
@@ -64,50 +38,66 @@ const Register = () => {
 
       <form
         className="bg-white shadow py-8 px-10 w-[450px] mx-auto rounded"
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmit)}
       >
         <div className="mb-6">
           <label className="block text-sm mb-1" htmlFor="email">
             E-mail
           </label>
           <input
-            className="block bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline focus:outline-blue-200 transition duration-150 ease-in-out sm:text-sm sm:leading-5 w-full"
-            type="mail"
-            value={formValues.email}
-            onChange={handleChange}
+            {...register('email', { required: true })}
+            className={
+              errors.email
+                ? 'block bg-white py-2 px-3 border border-red-500 rounded-md shadow-sm focus:outline focus:outline-red-200 transition duration-150 ease-in-out sm:text-sm sm:leading-5 w-full'
+                : 'block bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline focus:outline-blue-200 transition duration-150 ease-in-out sm:text-sm sm:leading-5 w-full'
+            }
+            type="email"
           />
-          <p className="text-xs text-red-500 mt-1">{formErrors.email}</p>
+          <p className="text-xs text-red-500 mt-1">
+            {errors.email && 'Esse campo é obrigatório'}
+          </p>
         </div>
         <div className="mb-6">
           <label className="block text-sm mb-1" htmlFor="email2">
             Repetir e-mail
           </label>
           <input
-            className="block bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline focus:outline-blue-200 transition duration-150 ease-in-out sm:text-sm sm:leading-5 w-full"
-            type="mail2"
-            value={formValues.email2}
-            onChange={handleChange}
+            {...register('email2', { required: true })}
+            className={
+              errors.email2
+                ? 'block bg-white py-2 px-3 border border-red-500 rounded-md shadow-sm focus:outline focus:outline-red-200 transition duration-150 ease-in-out sm:text-sm sm:leading-5 w-full'
+                : 'block bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline focus:outline-blue-200 transition duration-150 ease-in-out sm:text-sm sm:leading-5 w-full'
+            }
+            type="email"
           />
-          <p className="text-xs text-red-500 mt-1">{formErrors.email2}</p>
+          <p className="text-xs text-red-500 mt-1">
+            {errors.email2 && 'Esse campo é obrigatório'}
+          </p>
         </div>
         <div>
           <label className="block text-sm mb-1" htmlFor="password">
             Senha
           </label>
           <input
-            className="block bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline focus:outline-blue-200 transition duration-150 ease-in-out sm:text-sm sm:leading-5 w-full"
+            {...register('password', { required: true })}
+            className={
+              errors.password
+                ? 'block bg-white py-2 px-3 border border-red-500 rounded-md shadow-sm focus:outline focus:outline-red-200 transition duration-150 ease-in-out sm:text-sm sm:leading-5 w-full'
+                : 'block bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline focus:outline-blue-200 transition duration-150 ease-in-out sm:text-sm sm:leading-5 w-full'
+            }
             type="password"
-            value={formValues.password}
-            onChange={handleChange}
           />
-          <p className="text-xs text-red-500 mt-1">{formErrors.password}</p>
+          <p className="text-xs text-red-500 mt-1">
+            {errors.password && 'Esse campo é obrigatório'}
+          </p>
         </div>
         <div className="flex gap-1 my-4">
           <input
-            className="mb-4 border border-gray-300 rounded-md shadow-sm transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+            className="mb-4 border border-gray-300 rounded-md shadow-sm focus:outline focus:outline-blue-200 transition duration-150 ease-in-out sm:text-sm sm:leading-5 w-5 h-5"
             type="checkbox"
+            {...register('terms', { required: true })}
           />
-          <p className="text-sm">
+          <p className="text-xs text-gray-500">
             Eu li e aceito os <Link className="underline">termos de uso</Link>,{' '}
             <Link className="underline">
               termos de licença de uso de software

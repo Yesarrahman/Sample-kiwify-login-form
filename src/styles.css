@@ -1,0 +1,17 @@
+/* Responsive Styles */
+@media only screen and (max-width: 480px) {
+    .form {
+        border-radius: 0;
+    }
+
+    .form input[type="email"],
+    .form input[type="password"] {
+        font-size: 12px;
+        padding: 0.25rem 0.5rem;
+    }
+
+    .form button[type="submit"] {
+        font-size: 14px;
+        padding: 0.5rem 1rem;
+    }
+}

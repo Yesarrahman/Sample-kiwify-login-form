@@ -1,38 +1,18 @@
 import Logo from '../assets/images/logo.png';
-import { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 
 const ResetPassword = () => {
-  const initialValues = { email: '', password: '' };
-  const [formValues, setFormValues] = useState(initialValues);
-  const [formErrors, setFormErrors] = useState({});
-  const [isSubmit, setIsSubmit] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormValues({ ...formValues, [name]: value });
+  const onSubmit = (data) => {
+    console.log(data);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setFormErrors(Validate(formValues));
-    setIsSubmit(true);
-  };
-
-  useEffect(() => {
-    if (Object.keys(formErrors).length === 0 && isSubmit) {
-      console.log(formValues);
-    }
-  }, [formErrors, formValues, isSubmit]);
-
-  const Validate = (values) => {
-    const errors = {};
-    //const regex = /^[^\s@]+@\.[^s@]{2,}$/i;
-    if (!values.email) {
-      errors.email = 'Esse campo é obrigatório';
-    }
-    return errors;
-  };
   return (
     <div className="bg-[#dbe9f8b6] pt-[80px] h-[800px]">
       <div className="">
@@ -52,19 +32,26 @@ const ResetPassword = () => {
 
       <form
         className="bg-white shadow py-8 px-10 w-[450px] mx-auto rounded"
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmit)}
       >
         <div className="mb-6">
           <label className="block text-sm mb-1" htmlFor="email">
             E-mail
           </label>
           <input
-            className="block bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline focus:outline-blue-200 transition duration-150 ease-in-out sm:text-sm sm:leading-5 w-full"
-            type="mail"
-            value={formValues.email}
-            onChange={handleChange}
+            className={
+              errors.email
+                ? 'block bg-white py-2 px-3 border border-red-500 rounded-md shadow-sm focus:outline focus:outline-red-200 transition duration-150 ease-in-out sm:text-sm sm:leading-5 w-full'
+                : 'block bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline focus:outline-blue-200 transition duration-150 ease-in-out sm:text-sm sm:leading-5 w-full'
+            }
+            type="email"
+            {...register('email', { required: true })}
           />
-          <p className="text-xs text-red-500 mt-1">{formErrors.email}</p>
+          {errors.email && (
+            <p className="text-xs text-red-500 mt-1">
+              Esse campo é obrigatório
+            </p>
+          )}
         </div>
         <Link
           className="block text-right my-4 text-sm text-[#5050ecd0] hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150"
