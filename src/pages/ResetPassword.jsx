@@ -7,14 +7,16 @@ const ResetPassword = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({ 
+    mode: "onBlur"
+});
 
   const onSubmit = (data) => {
     console.log(data);
   };
 
   return (
-    <div className="bg-[#dbe9f8b6] pt-[80px] h-[800px]">
+    <div className="pt-[80px] h-[800px]">
       <div className="">
         <img className="mx-auto  h-[48px]" src={Logo} alt="Brand Logo" />
       </div>
@@ -23,15 +25,15 @@ const ResetPassword = () => {
         <h2 className="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
           Redefinir a senha
         </h2>
-        <div className="flex justify-center gap-1 mt-2 mb-6">
-          <span className="text-light">
+        <div className="flex justify-center gap-1 mt-2 mb-6 w-full sm:w-[400px]  mx-auto">
+          <span className="text-light mt-2 text-center text-base leading-5">
             Você receberá um e-mail com instruções para redefinir a senha
           </span>
         </div>
       </div>
 
       <form
-        className="bg-white shadow py-8 px-10 w-[450px] mx-auto rounded"
+        className="bg-white shadow py-8 px-10 w-full sm:w-[450px] mx-auto rounded"
         onSubmit={handleSubmit(onSubmit)}
       >
         <div className="mb-6">

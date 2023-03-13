@@ -8,14 +8,16 @@ const Register = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({ 
+    mode: "onBlur"
+  });
 
   const onSubmit = (data) => {
     console.log(data);
   };
 
   return (
-    <div className="bg-[#dbe9f8b6] pt-[55px] h-[800px]">
+    <div className="pt-[55px] h-[800px]">
       <div className="">
         <img className="mx-auto  h-[48px]" src={Logo} alt="Brand Logo" />
       </div>
@@ -37,7 +39,7 @@ const Register = () => {
       </div>
 
       <form
-        className="bg-white shadow py-8 px-10 w-[450px] mx-auto rounded"
+        className="bg-white shadow py-8 px-10 w-full sm:w-[450px] mx-auto rounded"
         onSubmit={handleSubmit(onSubmit)}
       >
         <div className="mb-6">
